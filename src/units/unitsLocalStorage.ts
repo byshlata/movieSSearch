@@ -1,5 +1,4 @@
 import { ProgressOption } from 'enum';
-import { initialStateFavoritesMovie } from 'store';
 import { AppInitialStateType, FavoritesInitialStateType } from 'type';
 
 export const loadStateFavoritesMovie = (): FavoritesInitialStateType | undefined => {
@@ -8,12 +7,13 @@ export const loadStateFavoritesMovie = (): FavoritesInitialStateType | undefined
     if (favoritesMovies === null) {
       return undefined;
     }
+    const favorites = JSON.parse(favoritesMovies) as FavoritesInitialStateType;
     return {
-      favoritesMovies: JSON.parse(favoritesMovies),
-      favoritesMoviesObj: initialStateFavoritesMovie.favoritesMoviesObj,
+      favoritesMovies: favorites.favoritesMovies,
+      favoritesMoviesObj: favorites.favoritesMoviesObj,
     };
   } catch (err) {
-    throw new Error('Error save to Local Storage');
+    throw new Error('Error get to Local Storage favorites movies state');
   }
 };
 
@@ -38,7 +38,7 @@ export const saveState = (state: {
   theme: boolean;
 }): void => {
   try {
-    localStorage.setItem('favoritesFilmsState', JSON.stringify(state.favoritesFilms));
+    localStorage.setItem('favoritesMoviesState', JSON.stringify(state.favoritesFilms));
     localStorage.setItem('themeSave', JSON.stringify(state.theme));
   } catch {
     throw new Error('Error save to Local Storage');
