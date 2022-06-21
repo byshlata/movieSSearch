@@ -10,15 +10,7 @@ export const TableMovies = React.memo(() => {
   const search = useSelector(searchResult);
 
   return (
-    <Grid
-      container
-      item
-      justifyContent="center"
-      alignItems="center"
-      spacing={2}
-      xs={12}
-      style={{ margin: 0 }}
-    >
+    <Grid container item spacing={1} justifyContent="center" style={{ margin: 0 }}>
       {search.map(m => (
         <MovieCard key={m.imdbID} movieInformation={m} />
       ))}

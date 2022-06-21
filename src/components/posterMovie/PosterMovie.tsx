@@ -1,7 +1,6 @@
 import React, { ReactElement, SyntheticEvent } from 'react';
 
 import Fab from '@material-ui/core/Fab/Fab';
-import Typography from '@material-ui/core/Typography/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
 import LiveHelpIcon from '@material-ui/icons/LiveHelp';
@@ -75,9 +74,7 @@ export const PosterMovie = ({
         </Fab>
       </div>
 
-      <Typography className={s.posterMovieTitle}>
-        {informationMovieLight.title}
-      </Typography>
+      <span className={s.posterMovieTitle}>{informationMovieLight.title}</span>
     </div>
   );
 };

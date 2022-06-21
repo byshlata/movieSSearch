@@ -55,7 +55,7 @@ export const MovieCard: React.FC<MovieCardType> = React.memo(props => {
   const informationMovieLight = { title, year, imdbID, type, poster, isFavorites };
 
   return (
-    <Grid className={s.movieCardWrapper} item xs={12} sm={6} md={4} lg={3}>
+    <Grid className={s.movieCardWrapper} item>
       <Paper className={s.movieCardItem} elevation={5}>
         {isGetInformation && movieInformation !== null ? (
           <MovieInformation

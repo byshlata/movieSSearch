@@ -74,6 +74,7 @@ export const InputWrapper = React.memo(() => {
       </Grid>
       <Grid item>
         <Button
+          style={{ padding: '8px' }}
           size="large"
           color="secondary"
           onClick={onClickHandle}
