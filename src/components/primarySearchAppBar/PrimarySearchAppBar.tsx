@@ -2,10 +2,10 @@ import React, { ReactElement, useState } from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import Badge from '@material-ui/core/Badge';
+import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import List from '@material-ui/core/List';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Toolbar from '@material-ui/core/Toolbar';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness5Icon from '@material-ui/icons/Brightness5';
@@ -19,7 +19,7 @@ import { useStyles } from './useStylePrimarySearchAppBar';
 import { CardFavoritesMovie, InputWrapper, MyAccordion } from 'components';
 import { FavoriteCartMassage, PageOptions, ProgressOption } from 'enum';
 import { useAppDispatch } from 'hooks';
-import { changeTheme, isThemeIndex, progress, myFavoritesMovies } from 'store';
+import { changeTheme, isThemeIndex, myFavoritesMovies, progress } from 'store';
 
 export const PrimarySearchAppBar = React.memo(() => {
   const classes = useStyles();
@@ -81,15 +81,14 @@ export const PrimarySearchAppBar = React.memo(() => {
 
   return (
     <div className={classes.grow}>
-      <SwipeableDrawer
+      <Drawer
         anchor="right"
         open={menuDrawer}
         onClose={toggleDrawer(false)}
-        onOpen={toggleDrawer(true)}
         style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
       >
         {list()}
-      </SwipeableDrawer>
+      </Drawer>
       <AppBar position="fixed">
         <Toolbar>
           <div className={classes.grow} />
