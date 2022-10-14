@@ -14,7 +14,7 @@ import { InformationTextLine } from 'components';
 import { DefaultSrc } from 'enum';
 import { useAppDispatch } from 'hooks';
 import { removeFavoritesMovie } from 'store';
-import { FavoriteMovieType } from 'type';
+import { FavoriteMovieType } from 'types';
 import { isImageFit } from 'units';
 
 type MyAccordionType = {

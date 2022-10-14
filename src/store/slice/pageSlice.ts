@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { PageOptions } from '../../enum';
-import { FavoriteMovieType, PageInitialStateType } from '../../type';
+import { FavoriteMovieType, PageInitialStateType } from '../../types';
 
 import { favoritesMovieSlice } from './favoritesMoveiSlice';
 

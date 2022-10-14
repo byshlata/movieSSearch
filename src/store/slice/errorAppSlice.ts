@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ErrorInitialStateType } from '../../type';
+import { ErrorInitialStateType } from '../../types';
 
 const initialState: ErrorInitialStateType = {
   message: '',

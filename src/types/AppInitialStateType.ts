@@ -1,5 +1,5 @@
 import { ProgressOption } from 'enum';
-import { Nullable } from 'type/Nullable';
+import { Nullable } from 'types/Nullable';
 
 export type AppInitialStateType = {
   errorMessage: Nullable<string>;

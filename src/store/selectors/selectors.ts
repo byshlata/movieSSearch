@@ -1,6 +1,6 @@
 import { ProgressOption } from 'enum';
 import { AppRootStore } from 'store';
-import { FavoriteMovieType, Nullable } from 'type';
+import { FavoriteMovieType, Nullable } from 'types';
 
 export const resultsMovie = (state: AppRootStore): number =>
   state.pageNumber.totalResults;

@@ -9,8 +9,8 @@ import {
   setResults,
   subtractResults,
 } from 'store/slice/pageSlice';
-import { FavoriteMovieType, MovieShortInformationType } from 'type';
-import { MoviePageType } from 'type/MoviePageType';
+import { FavoriteMovieType, MovieShortInformationType } from 'types';
+import { MoviePageType } from 'types/MoviePageType';
 
 export const setWellResponse = (
   res: MoviePageType,

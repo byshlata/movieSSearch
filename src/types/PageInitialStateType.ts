@@ -1,4 +1,4 @@
-import { FavoriteMovieType } from 'type/FavoriteMovieType';
+import { FavoriteMovieType } from 'types/FavoriteMovieType';
 
 export type PageInitialStateType = {
   errorResponse: string;

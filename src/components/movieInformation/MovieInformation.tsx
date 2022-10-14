@@ -8,11 +8,11 @@ import Rating from '@material-ui/lab/Rating';
 import s from './MovieInformation.module.sass';
 
 import { InformationTextLine } from 'components';
-import { MovieResultType } from 'type';
+import { MovieAllInformationType } from 'types';
 
 type MovieInformationType = {
   changeInformationByMovie: () => void;
-  movieResult: MovieResultType;
+  movieResult: MovieAllInformationType | undefined;
 };
 
 export const MovieInformation = ({
@@ -23,18 +23,20 @@ export const MovieInformation = ({
     changeInformationByMovie();
   };
 
-  const descriptionMovieInformation = [
-    { title: `Genre: `, value: movieResult.genre },
-    { title: `Director: `, value: movieResult.director },
-    { title: `Actors: `, value: movieResult.actors },
-    { title: `Plot films: `, value: movieResult.plot },
-    { title: `Year: `, value: movieResult.year },
+  console.log(movieResult);
+
+  const descriptionMovieInformation = movieResult && [
+    { title: `Genre: `, value: movieResult.Genre },
+    { title: `Director: `, value: movieResult.Director },
+    { title: `Actors: `, value: movieResult.Actors },
+    { title: `Plot films: `, value: movieResult.Plot },
+    { title: `Year: `, value: movieResult.Year },
   ];
 
   return (
     <div className={s.movieInformationWrapper}>
       <div className={s.movieDescriptionWrapper}>
-        {descriptionMovieInformation.map(({ title, value }) => (
+        {descriptionMovieInformation?.map(({ title, value }) => (
           <InformationTextLine key={title} title={title} value={value} />
         ))}
       </div>
@@ -51,7 +53,7 @@ export const MovieInformation = ({
         <Rating
           name="customized-10"
           disabled
-          defaultValue={movieResult.movieRating}
+          defaultValue={movieResult && movieResult.MovieRating}
           max={10}
         />
       </Box>

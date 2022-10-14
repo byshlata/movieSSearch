@@ -4,73 +4,52 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import Grid from '@material-ui/core/Grid/Grid';
 import Paper from '@material-ui/core/Paper';
 
+import { useGetMovieByIdQuery } from '../../store/api/movieApi';
+
 import s from './MovieCard.module.sass';
 
-import { Api } from 'api';
 import { MovieInformation, PosterMovie } from 'components';
-import { MovieResultType, FavoriteMovieType, MovieAllInformationType } from 'type';
+import { useAppDispatch } from 'hooks';
+import { occurredError } from 'store';
+import { FavoriteMovieType } from 'types';
 
 type MovieCardType = {
   movieInformation: FavoriteMovieType;
 };
 
-export const MovieCard: React.FC<MovieCardType> = React.memo(props => {
-  const { title, poster, imdbID, year, type, isFavorites } = props.movieInformation;
+export const MovieCard = React.memo(({ movieInformation }: MovieCardType) => {
+  const dispatch = useAppDispatch();
 
-  const [movieInformation, setMovieInformation] = useState<MovieResultType | null>(null);
-  const [isGetInformation, setIsGetInformation] = useState<boolean>(false);
-  const [isProgress, setIsProgress] = useState<boolean>(false);
+  const [skip, setSkip] = useState<boolean>(true);
+
+  const { data, error, isLoading } = useGetMovieByIdQuery(movieInformation.imdbID, {
+    skip,
+  });
 
   useEffect(() => {
-    if (isGetInformation && movieInformation === null) {
-      setIsProgress(true);
-      Api.searchFilmByIMBbID(imdbID)
-        .then(data => {
-          const { Response, Plot, Year, Runtime, Genre, Director, Actors, imdbRating } =
-            data as MovieAllInformationType;
-          if (Response === 'True') {
-            const movieRating = Math.trunc(parseInt(imdbRating, 10));
-            setMovieInformation({
-              plot: Plot,
-              year: Year,
-              runtime: Runtime,
-              genre: Genre,
-              director: Director,
-              actors: Actors,
-              movieRating,
-            });
-          } else {
-            setMovieInformation(null);
-          }
-        })
-        .catch(() => setMovieInformation(null))
-        .finally(() => setIsProgress(false));
+    if (error) {
+      dispatch(occurredError(error.toString()));
     }
-  }, [isGetInformation, movieInformation]);
+  }, [error]);
 
   const onClickHandle = (): void => {
-    setIsGetInformation(!isGetInformation);
+    setSkip(!skip);
   };
-
-  const informationMovieLight = { title, year, imdbID, type, poster, isFavorites };
 
   return (
     <Grid className={s.movieCardWrapper} item>
       <Paper className={s.movieCardItem} elevation={5}>
-        {isGetInformation && movieInformation !== null ? (
-          <MovieInformation
-            changeInformationByMovie={onClickHandle}
-            movieResult={movieInformation}
-          />
+        {!skip && data !== null ? (
+          <MovieInformation changeInformationByMovie={onClickHandle} movieResult={data} />
         ) : (
           <PosterMovie
-            informationMovieLight={informationMovieLight}
-            OnOffProgress={setIsGetInformation}
+            informationMovieLight={movieInformation}
+            OnOffProgress={setSkip}
             changeInformationByFilm={onClickHandle}
           />
         )}
       </Paper>
-      {isProgress ? <CircularProgress className={s.progress} color="secondary" /> : null}
+      {isLoading ? <CircularProgress className={s.progress} color="secondary" /> : null}
     </Grid>
   );
 });

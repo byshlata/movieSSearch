@@ -1,8 +1,7 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { ProgressOption } from '../../enum';
-import { AppInitialStateType, Nullable } from '../../type';
-import { getMovies } from '../thunk/pageThunk';
+import { AppInitialStateType, Nullable } from '../../types';
 
 export const initialState: AppInitialStateType = {
   errorMessage: '',
@@ -24,15 +23,15 @@ export const appSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(getMovies.pending, state => {
-      state.isProgress = ProgressOption.on;
-    });
-    builder.addCase(getMovies.fulfilled, state => {
-      state.isProgress = ProgressOption.off;
-    });
-    builder.addCase(getMovies.rejected, state => {
-      state.isProgress = ProgressOption.off;
-    });
+    // builder.addMatcher(movieApi.endpoints.getMovieById.matchPending, state => {
+    //   state.isProgress = ProgressOption.on;
+    // });
+    // builder.addMatcher(movieApi.endpoints.getMovieById.matchFulfilled, state => {
+    //   state.isProgress = ProgressOption.off;
+    // });
+    // builder.addMatcher(movieApi.endpoints.getMovieById.matchRejected, state => {
+    //   state.isProgress = ProgressOption.off;
+    // });
   },
 });
 

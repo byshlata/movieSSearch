@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Api } from 'api';
 import { AppRootStore } from 'store';
 import { occurredError } from 'store/slice/appSlice';
-import { MovieTitleRequestType } from 'type';
+import { MovieTitleRequestType } from 'types';
 import { setBadResponse, setWellResponse } from 'units/unitsSetMoviesOrError';
 
 export const getMovies = createAsyncThunk(

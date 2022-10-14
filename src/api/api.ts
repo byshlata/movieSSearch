@@ -1,18 +1,18 @@
 import { API_CONFIG } from './config';
 
-import { MovieAllInformationType, MoviePageType, MovieTitleRequestType } from 'type';
+import { MovieAllInformationType, MoviePageType, MovieTitleRequestType } from 'types';
 
 export const Api = {
   searchFilmsByTitle: async (value: MovieTitleRequestType) => {
     const res = await API_CONFIG.get<MoviePageType>(
-      `${process.env.REACT_APP_API_KEY}&s=${value.title}&page=${value.pageNumber}`,
+      `?apikey=53188de0&s=${value.title}&page=${value.pageNumber}`,
     );
     return res.data;
   },
 
   searchFilmByIMBbID: async (IMBbID: string) => {
     const res = await API_CONFIG.get<MovieAllInformationType>(
-      `${process.env.REACT_APP_API_KEY}&i=${IMBbID}`,
+      `?apikey=53188de0&i=${IMBbID}`,
     );
     return res.data;
   },

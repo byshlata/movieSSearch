@@ -1,4 +1,4 @@
-import { MovieShortInformationType } from 'type';
+import { MovieShortInformationType } from 'types';
 
 export type MoviePageType = {
   Search: MovieShortInformationType[];

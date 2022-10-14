@@ -1,4 +1,4 @@
-import { RatingType } from 'type';
+import { RatingType } from 'types';
 
 export type MovieAllInformationType = {
   Title: string;

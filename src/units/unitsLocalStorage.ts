@@ -1,5 +1,5 @@
 import { ProgressOption } from 'enum';
-import { AppInitialStateType, FavoritesInitialStateType } from 'type';
+import { AppInitialStateType, FavoritesInitialStateType } from 'types';
 
 export const loadStateFavoritesMovie = (): FavoritesInitialStateType | undefined => {
   try {

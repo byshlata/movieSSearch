@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { FavoriteMovieType, FavoritesInitialStateType } from '../../type';
+import { FavoriteMovieType, FavoritesInitialStateType } from '../../types';
 
 export const initialState: FavoritesInitialStateType = {
   favoritesMovies: [
