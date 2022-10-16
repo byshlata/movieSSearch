@@ -35,3 +35,5 @@ export {
   myFavoritesMovies,
   progress,
 } from './selectors/selectors';
+
+export { useGetMovieByIdQuery } from './api/movieApi';

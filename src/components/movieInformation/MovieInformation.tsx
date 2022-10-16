@@ -23,8 +23,6 @@ export const MovieInformation = ({
     changeInformationByMovie();
   };
 
-  console.log(movieResult);
-
   const descriptionMovieInformation = movieResult && [
     { title: `Genre: `, value: movieResult.Genre },
     { title: `Director: `, value: movieResult.Director },
@@ -53,7 +51,7 @@ export const MovieInformation = ({
         <Rating
           name="customized-10"
           disabled
-          defaultValue={movieResult && movieResult.MovieRating}
+          defaultValue={movieResult && +movieResult.imdbRating}
           max={10}
         />
       </Box>

@@ -4,13 +4,11 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import Grid from '@material-ui/core/Grid/Grid';
 import Paper from '@material-ui/core/Paper';
 
-import { useGetMovieByIdQuery } from '../../store/api/movieApi';
-
 import s from './MovieCard.module.sass';
 
 import { MovieInformation, PosterMovie } from 'components';
 import { useAppDispatch } from 'hooks';
-import { occurredError } from 'store';
+import { useGetMovieByIdQuery, occurredError } from 'store';
 import { FavoriteMovieType } from 'types';
 
 type MovieCardType = {

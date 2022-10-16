@@ -104,14 +104,22 @@ export const PrimarySearchAppBar = React.memo(() => {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton onClick={toggleDrawer(true)} color="inherit">
-              <Badge badgeContent={numberFavoritesMovies} color="secondary">
+              <Badge
+                overlap="rectangular"
+                badgeContent={numberFavoritesMovies}
+                color="secondary"
+              >
                 <TheatersIcon />
               </Badge>
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton onClick={toggleDrawer(true)} color="inherit">
-              <Badge badgeContent={numberFavoritesMovies} color="secondary">
+              <Badge
+                overlap="rectangular"
+                badgeContent={numberFavoritesMovies}
+                color="secondary"
+              >
                 <MoreIcon />
               </Badge>
             </IconButton>
