@@ -25,7 +25,7 @@ export {
 export { getMovies } from './thunk/pageThunk';
 
 export {
-  errorMessage,
+  selectorErrorMessage,
   titleSearch,
   searchResult,
   errorResponse,

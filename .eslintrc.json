@@ -48,7 +48,8 @@
       "error",
       {
         "ignoreEnums": true,
-        "ignoreNumericLiteralTypes": true
+        "ignoreNumericLiteralTypes": true,
+        "ignore": [0, 1, -1]
       }
     ],
     "@typescript-eslint/no-use-before-define": [

@@ -5,7 +5,7 @@ import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { useSelector } from 'react-redux';
 
 import { useAppDispatch } from 'hooks';
-import { errorMessage, occurredError } from 'store';
+import { selectorErrorMessage, occurredError } from 'store';
 
 const Alert = (props: AlertProps): ReactElement => (
   // eslint-disable-next-line react/jsx-props-no-spreading
@@ -13,7 +13,7 @@ const Alert = (props: AlertProps): ReactElement => (
 );
 
 export const ErrorSnackbar = (): ReactElement => {
-  const error = useSelector(errorMessage);
+  const error = useSelector(selectorErrorMessage);
 
   const dispatch = useAppDispatch();
 

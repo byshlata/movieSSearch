@@ -7,6 +7,7 @@ import {
 } from '../units/unitsLocalStorage';
 
 import { movieApi } from './api/movieApi';
+import { moviesApi } from './api/moviesApi';
 
 import { appSlice } from 'store/slice/appSlice';
 import { favoritesMovieSlice } from 'store/slice/favoritesMoveiSlice';
@@ -18,6 +19,7 @@ export const store = configureStore({
     favoritesMovie: favoritesMovieSlice.reducer,
     app: appSlice.reducer,
     [movieApi.reducerPath]: movieApi.reducer,
+    [moviesApi.reducerPath]: moviesApi.reducer,
   },
   preloadedState: {
     app: loadStateTheme(),

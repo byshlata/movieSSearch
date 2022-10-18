@@ -9,7 +9,7 @@ export const titleSearch = (state: AppRootStore): string => state.pageNumber.tit
 
 export const isThemeIndex = (state: AppRootStore): boolean => state.app.isTheme;
 
-export const errorMessage = (state: AppRootStore): Nullable<string> =>
+export const selectorErrorMessage = (state: AppRootStore): Nullable<string> =>
   state.app.errorMessage;
 
 export const errorResponse = (state: AppRootStore): string =>

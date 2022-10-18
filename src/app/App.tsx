@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 
 import { ThemeProvider } from '@material-ui/core';
 import Button from '@material-ui/core/Button/Button';
@@ -13,24 +13,19 @@ import { themeDark, themeLight } from './createThemeMUI/createThemeMUI';
 import { ErrorSnackbar, PrimarySearchAppBar, TableMovies } from 'components';
 import { PageOptions } from 'enum';
 import { useAppDispatch } from 'hooks';
-import {
-  getMovies,
-  errorMessage,
-  isThemeIndex,
-  pageNumberNow,
-  resultsMovie,
-  titleSearch,
-} from 'store';
+import { getMovies, isThemeIndex, pageNumberNow, resultsMovie, titleSearch } from 'store';
+import { useGetMoviesQuery } from 'store/api/moviesApi';
+import { MoviePageType } from 'types';
 
 const INITIAL_TITLE_FIRST = 'Batman';
 const INITIAL_TITLE_SECOND = 'Star wars';
+const MOVIE_ONE_RESPONSE = 10;
 
 export const App = (): ReactElement => {
   const totalResults = useSelector(resultsMovie);
   const pageNumber = useSelector(pageNumberNow);
   const title = useSelector(titleSearch);
   const isTheme = useSelector(isThemeIndex);
-  const error = useSelector(errorMessage);
 
   const dispatch = useAppDispatch();
 
@@ -42,6 +37,31 @@ export const App = (): ReactElement => {
       getMovies({ pageNumber: PageOptions.startPageFound, title: INITIAL_TITLE_SECOND }),
     );
   }, []);
+
+  const [skip, setSkip] = useState<boolean>(false);
+  const [movies, setMovies] = useState<MoviePageType>({
+    Search: [],
+    Error: '',
+    totalResults: '1000',
+    Response: '',
+  });
+
+  const { data, error, isLoading, refetch } = useGetMoviesQuery(
+    { pageNumber: 1000, title: 'Batman' },
+    {
+      skip,
+    },
+  );
+
+  useEffect(() => {
+    if (data?.totalResults && +data.totalResults > pageNumber * MOVIE_ONE_RESPONSE) {
+      // setMovies(movies.Search = [...movies.Search, ...data.Search]);
+    } else if ('page' > 1) {
+      setSkip(true);
+    }
+  }, [data]);
+
+  console.log(data);
 
   const onClickHandler = (): void => {
     dispatch(getMovies({ pageNumber, title }));
