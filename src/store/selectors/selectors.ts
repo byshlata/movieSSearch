@@ -1,18 +1,9 @@
 import { ProgressOption } from 'enum';
 import { AppRootStore } from 'store';
-import { FavoriteMovieType, Nullable } from 'types';
+import { FavoriteMovieType } from 'types';
 
 export const resultsMovie = (state: AppRootStore): number =>
   state.pageNumber.totalResults;
-
-export const titleSearch = (state: AppRootStore): string => state.pageNumber.titleSearch;
-
-
-
-export const errorResponse = (state: AppRootStore): string =>
-  state.pageNumber.errorResponse;
-
-export const pageNumberNow = (state: AppRootStore): number => state.pageNumber.pageNumber;
 
 export const searchResult = (state: AppRootStore): FavoriteMovieType[] =>
   state.pageNumber.searchResult;

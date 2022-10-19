@@ -12,14 +12,14 @@ import { useAppDispatch } from 'hooks';
 import {
   getMovies,
   occurredError,
-  pageNumberNow,
+  selectorPageNumber,
   removeSearchResult,
-  titleSearch,
+  selectorTitle,
 } from 'store';
 
 export const InputWrapper = React.memo(() => {
-  const pageNumber = useSelector(pageNumberNow);
-  const title = useSelector(titleSearch);
+  const pageNumber = useSelector(selectorPageNumber);
+  const title = useSelector(selectorTitle);
 
   const dispatch = useAppDispatch();
 

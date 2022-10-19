@@ -1,11 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import {
-  loadStateFavoritesMovie,
-  loadStateTheme,
-  saveState,
-} from '../units/unitsLocalStorage';
-
 import { movieApi } from './api/movieApi';
 import { moviesApi } from './api/moviesApi';
 import { paramsSlice } from './slice/paramsSlice';
@@ -13,6 +7,11 @@ import { paramsSlice } from './slice/paramsSlice';
 import { appSlice } from 'store/slice/appSlice';
 import { favoritesMovieSlice } from 'store/slice/favoritesMoveiSlice';
 import { pageSlice } from 'store/slice/pageSlice';
+import {
+  loadStateFavoritesMovie,
+  loadStateTheme,
+  saveState,
+} from 'utils/localStorageHelper';
 
 export const store = configureStore({
   reducer: {

@@ -1,8 +1,7 @@
 import { FavoriteMovieType } from 'types/FavoriteMovieType';
 
 export type PageInitialStateType = {
-  errorResponse: string;
-  pageNumber: number;
-  searchResult: FavoriteMovieType[];
+  error: string;
+  search: FavoriteMovieType[];
   totalResults: number;
 };

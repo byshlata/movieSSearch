@@ -11,7 +11,7 @@ import { DefaultSrc } from 'enum';
 import { useAppDispatch } from 'hooks';
 import { addFavoritesMovie, removeFavoritesMovie } from 'store';
 import { FavoriteMovieType } from 'types';
-import { isImageFit } from 'units';
+import { isImageFit } from 'utils';
 
 type PosterFilmType = {
   informationMovieLight: FavoriteMovieType;

@@ -17,9 +17,9 @@ import s from './PrimarySearchAppBar.module.sass';
 import { useStyles } from './useStylePrimarySearchAppBar';
 
 import { CardFavoritesMovie, InputWrapper, MyAccordion } from 'components';
-import { FavoriteCartMassage, PageOptions, ProgressOption } from 'enum';
+import { FavoriteCartMassage, PageOptions } from 'enum';
 import { useAppDispatch } from 'hooks';
-import { changeTheme, isThemeIndex, myFavoritesMovies, progress } from 'store';
+import { changeTheme, selectorIsThemeIndex, myFavoritesMovies } from 'store';
 
 type PrimarySearchAppBarType = {
   isLoading: boolean;
@@ -30,7 +30,7 @@ export const PrimarySearchAppBar = React.memo(
     const classes = useStyles();
 
     const favoritesMovies = useSelector(myFavoritesMovies);
-    const themeState = useSelector(isThemeIndex);
+    const themeState = useSelector(selectorIsThemeIndex);
 
     const dispatch = useAppDispatch();
 

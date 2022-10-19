@@ -16,14 +16,13 @@ export {
 export { getMovies } from './thunk/pageThunk';
 
 export {
-  titleSearch,
   searchResult,
-  errorResponse,
   resultsMovie,
-  pageNumberNow,
   myFavoritesMovies,
   progress,
 } from './selectors/selectors';
+
+export { selectorPageNumber, selectorTitle } from './selectors/seloctorsParams';
 
 export {
   selectorErrorMessageOther,

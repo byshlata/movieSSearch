@@ -5,7 +5,7 @@ import { Api } from 'api';
 import { AppRootStore } from 'store';
 import { occurredError } from 'store/slice/appSlice';
 import { MovieTitleRequestType } from 'types';
-import { setBadResponse, setWellResponse } from 'units/unitsSetMoviesOrError';
+import { setBadResponse, setWellResponse } from 'utils/unitsSetMoviesOrError';
 
 export const getMovies = createAsyncThunk(
   'pageSlice/getMovies',

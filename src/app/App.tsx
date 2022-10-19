@@ -17,11 +17,11 @@ import { PageOptions } from 'enum';
 import { useAppDispatch } from 'hooks';
 import {
   getMovies,
-  isThemeIndex,
-  pageNumberNow,
+  selectorIsThemeIndex,
   resultsMovie,
   selectorErrorMessageOther,
-  titleSearch,
+  selectorTitle,
+  selectorPageNumber,
 } from 'store';
 
 const INITIAL_TITLE_FIRST = 'Batman';
@@ -29,9 +29,9 @@ const INITIAL_TITLE_SECOND = 'Star wars';
 
 export const App = (): ReactElement => {
   const totalResults = useSelector(resultsMovie);
-  const pageNumber = useSelector(pageNumberNow);
-  const title = useSelector(titleSearch);
-  const isTheme = useSelector(isThemeIndex);
+  const pageNumber = useSelector(selectorPageNumber);
+  const title = useSelector(selectorTitle);
+  const isTheme = useSelector(selectorIsThemeIndex);
 
   const errorMessageOther = useSelector(selectorErrorMessageOther);
 
@@ -46,7 +46,9 @@ export const App = (): ReactElement => {
     );
   }, []);
 
-  const { data, error, isLoading } = useNextPage({ pageNumber, title });
+  const { data, error, isLoading } = useNextPage({ pageNumber: 1, title: 'batman' });
+
+  console.log('data', data);
 
   const onClickHandler = (): void => {
     dispatch(getMovies({ pageNumber, title }));
