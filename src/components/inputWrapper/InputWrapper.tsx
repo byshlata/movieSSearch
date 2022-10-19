@@ -8,14 +8,11 @@ import { useSelector } from 'react-redux';
 
 import s from './InputWrapper.module.sass';
 
+import { PageOptions } from 'enum';
 import { useAppDispatch } from 'hooks';
-import {
-  getMovies,
-  occurredError,
-  selectorPageNumber,
-  removeSearchResult,
-  selectorTitle,
-} from 'store';
+import { getMovies, removeSearchResult, selectorPageNumber, selectorTitle } from 'store';
+
+const RX = /^[а-яё]+$/i;
 
 export const InputWrapper = React.memo(() => {
   const pageNumber = useSelector(selectorPageNumber);
@@ -23,26 +20,28 @@ export const InputWrapper = React.memo(() => {
 
   const dispatch = useAppDispatch();
 
-  const [error, setError] = useState(false);
-
-  const rx = /^[а-яё]+$/i;
+  const [error, setError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>('');
 
   const inputText = error ? 'Title not correct' : 'Title film...';
 
   const onChangeHandle = (event: ChangeEvent<HTMLInputElement>): void => {
+    setInputValue(event.currentTarget.value);
     removeSearchResult();
-    dispatch(occurredError(null));
     setError(false);
+    setErrorMessage('');
   };
 
   const onClickHandle = (): void => {
-    if (rx.test(title)) {
-      dispatch(occurredError('Search is English only'));
+    if (RX.test(title)) {
+      setErrorMessage('Search is English only');
     } else if (title.trim()) {
-      dispatch(getMovies({ pageNumber, title }));
+      dispatch(getMovies({ pageNumber: PageOptions.startPageFound, title: inputValue }));
     } else {
       setError(true);
     }
+    setInputValue('');
   };
 
   const onKeyPressSearchFilmHandler = (event: KeyboardEvent<HTMLDivElement>): void => {
@@ -57,7 +56,7 @@ export const InputWrapper = React.memo(() => {
         <TextField
           className={s.input}
           onChange={onChangeHandle}
-          value={title}
+          value={inputValue}
           onKeyPress={onKeyPressSearchFilmHandler}
           color="secondary"
           label={inputText}
