@@ -7,10 +7,7 @@ export const resultsMovie = (state: AppRootStore): number =>
 
 export const titleSearch = (state: AppRootStore): string => state.pageNumber.titleSearch;
 
-export const isThemeIndex = (state: AppRootStore): boolean => state.app.isTheme;
 
-export const selectorErrorMessage = (state: AppRootStore): Nullable<string> =>
-  state.app.errorMessage;
 
 export const errorResponse = (state: AppRootStore): string =>
   state.pageNumber.errorResponse;

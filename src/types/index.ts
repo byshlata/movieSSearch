@@ -21,3 +21,7 @@ export type { RatingType } from './RatingType';
 export type { MovieShortInformationType } from './MovieShortInformationType';
 
 export type { MoviePageType } from './MoviePageType';
+
+export type { UndefinedType } from './UndefinedType';
+
+export type { MovieSearchParamsType } from './MovieSearchParamsType';

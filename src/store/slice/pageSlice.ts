@@ -7,8 +7,7 @@ import { favoritesMovieSlice } from './favoritesMoveiSlice';
 
 export const initialState: PageInitialStateType = {
   errorResponse: '',
-  titleSearch: '',
-  pageNumber: PageOptions.startPageFound,
+  pageNumber: 1,
   searchResult: [],
   totalResults: PageOptions.startTotal,
 };
@@ -17,37 +16,10 @@ export const pageSlice = createSlice({
   name: 'pageSlice',
   initialState,
   reducers: {
-    addPage: state => {
-      state.pageNumber += PageOptions.NEXT_PAGE;
-    },
-
     addSearchResult: (state, action) => {
       state.searchResult = [...state.searchResult, ...action.payload];
     },
-
-    removePage: state => {
-      state.pageNumber = PageOptions.NUMBER_START_PAGE;
-    },
-
-    removeSearch: state => {
-      state.searchResult = [];
-    },
-
-    setResults: (state, action: PayloadAction<number>) => {
-      state.totalResults = action.payload;
-    },
-
-    removeResults: state => {
-      state.totalResults = PageOptions.STOP_SEARCH;
-    },
-
-    subtractResults: state => {
-      state.totalResults -= PageOptions.NumberOfMoviesInTheRequest;
-    },
-
-    searchTitle: (state, action: PayloadAction<string>) => {
-      state.titleSearch = action.payload;
-    },
+    removeSearchResult: () => initialState,
   },
   extraReducers: builder => {
     builder.addCase(
@@ -74,13 +46,4 @@ export const pageSlice = createSlice({
   },
 });
 
-export const {
-  addPage,
-  addSearchResult,
-  removeSearch,
-  removePage,
-  searchTitle,
-  removeResults,
-  setResults,
-  subtractResults,
-} = pageSlice.actions;
+export const { addSearchResult, removeSearchResult } = pageSlice.actions;

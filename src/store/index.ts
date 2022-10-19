@@ -4,16 +4,7 @@ export type { AppRootStore, AppDispatch } from './store';
 
 export { occurredError, changeTheme, initialStateApp } from './slice/appSlice';
 
-export {
-  addPage,
-  addSearchResult,
-  removeSearch,
-  removePage,
-  searchTitle,
-  removeResults,
-  setResults,
-  subtractResults,
-} from './slice/pageSlice';
+export { addSearchResult, removeSearchResult } from './slice/pageSlice';
 
 export {
   addFavoritesMovie,
@@ -25,15 +16,20 @@ export {
 export { getMovies } from './thunk/pageThunk';
 
 export {
-  selectorErrorMessage,
   titleSearch,
   searchResult,
   errorResponse,
   resultsMovie,
-  isThemeIndex,
   pageNumberNow,
   myFavoritesMovies,
   progress,
 } from './selectors/selectors';
+
+export {
+  selectorErrorMessageOther,
+  selectorIsThemeIndex,
+} from './selectors/seloctorsApp';
+
+export { changeParams, removeParams } from './slice/paramsSlice';
 
 export { useGetMovieByIdQuery } from './api/movieApi';

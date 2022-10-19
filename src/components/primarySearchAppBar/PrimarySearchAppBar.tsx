@@ -21,116 +21,118 @@ import { FavoriteCartMassage, PageOptions, ProgressOption } from 'enum';
 import { useAppDispatch } from 'hooks';
 import { changeTheme, isThemeIndex, myFavoritesMovies, progress } from 'store';
 
-export const PrimarySearchAppBar = React.memo(() => {
-  const classes = useStyles();
+type PrimarySearchAppBarType = {
+  isLoading: boolean;
+};
 
-  const favoritesMovies = useSelector(myFavoritesMovies);
-  const themeState = useSelector(isThemeIndex);
+export const PrimarySearchAppBar = React.memo(
+  ({ isLoading }: PrimarySearchAppBarType) => {
+    const classes = useStyles();
 
-  const progressNow = useSelector(progress);
+    const favoritesMovies = useSelector(myFavoritesMovies);
+    const themeState = useSelector(isThemeIndex);
 
-  const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
-  const [menuDrawer, setMenuDrawer] = useState<boolean>(false);
+    const [menuDrawer, setMenuDrawer] = useState<boolean>(false);
 
-  const numberFavoritesMovies = favoritesMovies.length - PageOptions.notFavoriteMovie;
+    const numberFavoritesMovies = favoritesMovies.length - PageOptions.notFavoriteMovie;
 
-  const toggleDrawer =
-    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event &&
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
-      ) {
-        return;
-      }
-      setMenuDrawer(open);
+    const toggleDrawer =
+      (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+        if (
+          event &&
+          event.type === 'keydown' &&
+          ((event as React.KeyboardEvent).key === 'Tab' ||
+            (event as React.KeyboardEvent).key === 'Shift')
+        ) {
+          return;
+        }
+        setMenuDrawer(open);
+      };
+
+    const list = (): ReactElement => (
+      <List className={s.drawerWrapper}>
+        {favoritesMovies.map(movie => {
+          if (
+            movie.title === '' &&
+            favoritesMovies.length === PageOptions.startNumberFavoriteMovies
+          ) {
+            return (
+              <CardFavoritesMovie
+                key={movie.imdbID}
+                title={FavoriteCartMassage.notFavoriteMovies}
+              />
+            );
+          }
+          if (movie.title === '') {
+            return (
+              <CardFavoritesMovie
+                key={movie.imdbID}
+                title={FavoriteCartMassage.deleteAll}
+              />
+            );
+          }
+          return <MyAccordion key={movie.imdbID} favoritesMovie={movie} />;
+        })}
+      </List>
+    );
+
+    const changeThemeHandler = (): void => {
+      dispatch(changeTheme());
     };
 
-  const list = (): ReactElement => (
-    <List className={s.drawerWrapper}>
-      {favoritesMovies.map(movie => {
-        if (
-          movie.title === '' &&
-          favoritesMovies.length === PageOptions.startNumberFavoriteMovies
-        ) {
-          return (
-            <CardFavoritesMovie
-              key={movie.imdbID}
-              title={FavoriteCartMassage.notFavoriteMovies}
-            />
-          );
-        }
-        if (movie.title === '') {
-          return (
-            <CardFavoritesMovie
-              key={movie.imdbID}
-              title={FavoriteCartMassage.deleteAll}
-            />
-          );
-        }
-        return <MyAccordion key={movie.imdbID} favoritesMovie={movie} />;
-      })}
-    </List>
-  );
-
-  const changeThemeHandler = (): void => {
-    dispatch(changeTheme());
-  };
-
-  return (
-    <div className={classes.grow}>
-      <Drawer
-        anchor="right"
-        open={menuDrawer}
-        onClose={toggleDrawer(false)}
-        style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
-      >
-        {list()}
-      </Drawer>
-      <AppBar position="fixed">
-        <Toolbar>
-          <div className={classes.grow} />
-          <IconButton
-            aria-label="Brightness5Icon"
-            color="inherit"
-            onClick={changeThemeHandler}
-            style={{ width: '5px', height: '5px' }}
-          >
-            {themeState ? <Brightness4Icon /> : <Brightness5Icon />}
-          </IconButton>
-          <InputWrapper />
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <IconButton onClick={toggleDrawer(true)} color="inherit">
-              <Badge
-                overlap="rectangular"
-                badgeContent={numberFavoritesMovies}
-                color="secondary"
-              >
-                <TheatersIcon />
-              </Badge>
+    return (
+      <div className={classes.grow}>
+        <Drawer
+          anchor="right"
+          open={menuDrawer}
+          onClose={toggleDrawer(false)}
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
+        >
+          {list()}
+        </Drawer>
+        <AppBar position="fixed">
+          <Toolbar>
+            <div className={classes.grow} />
+            <IconButton
+              aria-label="Brightness5Icon"
+              color="inherit"
+              onClick={changeThemeHandler}
+              style={{ width: '5px', height: '5px' }}
+            >
+              {themeState ? <Brightness4Icon /> : <Brightness5Icon />}
             </IconButton>
+            <InputWrapper />
+            <div className={classes.grow} />
+            <div className={classes.sectionDesktop}>
+              <IconButton onClick={toggleDrawer(true)} color="inherit">
+                <Badge
+                  overlap="rectangular"
+                  badgeContent={numberFavoritesMovies}
+                  color="secondary"
+                >
+                  <TheatersIcon />
+                </Badge>
+              </IconButton>
+            </div>
+            <div className={classes.sectionMobile}>
+              <IconButton onClick={toggleDrawer(true)} color="inherit">
+                <Badge
+                  overlap="rectangular"
+                  badgeContent={numberFavoritesMovies}
+                  color="secondary"
+                >
+                  <MoreIcon />
+                </Badge>
+              </IconButton>
+            </div>
+          </Toolbar>
+          <div className={s.progressBlock}>
+            {isLoading && <LinearProgress className={s.progress} color="primary" />}
           </div>
-          <div className={classes.sectionMobile}>
-            <IconButton onClick={toggleDrawer(true)} color="inherit">
-              <Badge
-                overlap="rectangular"
-                badgeContent={numberFavoritesMovies}
-                color="secondary"
-              >
-                <MoreIcon />
-              </Badge>
-            </IconButton>
-          </div>
-        </Toolbar>
-        <div className={s.progressBlock}>
-          {progressNow === ProgressOption.on && (
-            <LinearProgress className={s.progress} color="primary" />
-          )}
-        </div>
-      </AppBar>
-    </div>
-  );
-});
+        </AppBar>
+      </div>
+    );
+  },
+);

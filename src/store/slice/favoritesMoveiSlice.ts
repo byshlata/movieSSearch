@@ -2,18 +2,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { FavoriteMovieType, FavoritesInitialStateType } from '../../types';
 
-export const initialState: FavoritesInitialStateType = {
+export const initialStateFavoritesMovie: FavoritesInitialStateType = {
   favoritesMovies: [
     { title: '', year: '', imdbID: '', type: '', poster: '', isFavorites: false },
   ],
   favoritesMoviesObj: {},
 };
 
-export const initialStateFavoritesMovie = initialState;
-
 export const favoritesMovieSlice = createSlice({
   name: 'favoritesMovieSlice',
-  initialState,
+  initialState: initialStateFavoritesMovie,
   reducers: {
     addFavoritesMovie: (state, action: PayloadAction<FavoriteMovieType>) => {
       // eslint-disable-next-line no-prototype-builtins
@@ -33,12 +31,7 @@ export const favoritesMovieSlice = createSlice({
       );
     },
 
-    removeALLFavoritesMovies: state => {
-      state.favoritesMovies = [
-        { title: '', year: '', imdbID: '', type: '', poster: '', isFavorites: false },
-      ];
-      state.favoritesMoviesObj = {};
-    },
+    removeALLFavoritesMovies: () => initialStateFavoritesMovie,
   },
 });
 

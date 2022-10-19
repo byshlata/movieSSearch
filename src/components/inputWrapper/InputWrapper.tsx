@@ -13,10 +13,7 @@ import {
   getMovies,
   occurredError,
   pageNumberNow,
-  removePage,
-  removeResults,
-  removeSearch,
-  searchTitle,
+  removeSearchResult,
   titleSearch,
 } from 'store';
 
@@ -33,10 +30,7 @@ export const InputWrapper = React.memo(() => {
   const inputText = error ? 'Title not correct' : 'Title film...';
 
   const onChangeHandle = (event: ChangeEvent<HTMLInputElement>): void => {
-    dispatch(removeSearch());
-    dispatch(removePage());
-    dispatch(removeResults());
-    dispatch(searchTitle(event.currentTarget.value));
+    removeSearchResult();
     dispatch(occurredError(null));
     setError(false);
   };
