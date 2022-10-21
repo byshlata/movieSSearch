@@ -10,13 +10,14 @@ import s from './PosterMovie.module.sass';
 import { DefaultSrc } from 'enum';
 import { useAppDispatch } from 'hooks';
 import { addFavoritesMovie, removeFavoritesMovie } from 'store';
-import { FavoriteMovieType } from 'types';
+import { MovieShortInformationType } from 'types';
 import { isImageFit } from 'utils';
 
 type PosterFilmType = {
-  informationMovieLight: FavoriteMovieType;
+  informationMovieLight: MovieShortInformationType;
   OnOffProgress: (value: boolean) => void;
   changeInformationByFilm: () => void;
+  isFavorite: boolean;
 };
 const INDEX_HEIGHT_WIDTH = 50;
 
@@ -24,6 +25,7 @@ export const PosterMovie = ({
   OnOffProgress,
   informationMovieLight,
   changeInformationByFilm,
+  isFavorite,
 }: PosterFilmType): ReactElement => {
   const dispatch = useAppDispatch();
 
@@ -38,10 +40,10 @@ export const PosterMovie = ({
   };
 
   const addFilmFavorites = (): void => {
-    if (!informationMovieLight.isFavorites) {
-      dispatch(addFavoritesMovie(informationMovieLight));
-    } else {
+    if (isFavorite) {
       dispatch(removeFavoritesMovie(informationMovieLight.imdbID));
+    } else {
+      dispatch(addFavoritesMovie(informationMovieLight));
     }
   };
 
@@ -54,13 +56,13 @@ export const PosterMovie = ({
     <div className={s.posterMovieWrapper}>
       <img
         className={s.posterImg}
-        src={informationMovieLight.poster}
+        src={informationMovieLight.Poster}
         onError={defaultSrc}
         alt="Poster"
         onLoad={onLoadSrc}
       />
       <div className={s.buttonBlock}>
-        {informationMovieLight.isFavorites ? (
+        {isFavorite ? (
           <Fab color="primary" aria-label="add" size="small" onClick={addFilmFavorites}>
             <CheckIcon />
           </Fab>
@@ -74,7 +76,7 @@ export const PosterMovie = ({
         </Fab>
       </div>
 
-      <span className={s.posterMovieTitle}>{informationMovieLight.title}</span>
+      <span className={s.posterMovieTitle}>{informationMovieLight.Title}</span>
     </div>
   );
 };

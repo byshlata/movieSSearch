@@ -3,10 +3,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 
-import { UndefinedType } from '../../types';
-
-import { useAppDispatch } from 'hooks';
-import { occurredError } from 'store';
+import { ErrorType } from 'types';
 
 const Alert = (props: AlertProps): ReactElement => (
   // eslint-disable-next-line react/jsx-props-no-spreading
@@ -14,29 +11,37 @@ const Alert = (props: AlertProps): ReactElement => (
 );
 
 type ErrorSnackbarType = {
-  error: string | undefined;
+  error: ErrorType;
 };
 
 export const ErrorSnackbar = ({ error }: ErrorSnackbarType): ReactElement => {
-  const [errorMessage, setErrorMessage] = useState<UndefinedType<string>>(error);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const isOpen = errorMessage !== undefined;
+  const isOpen = !!errorMessage;
 
   useEffect(() => {
-    setErrorMessage(error);
+    if (error) {
+      if (typeof error === 'string') {
+        setErrorMessage(error);
+      } else {
+        setErrorMessage('Error. Try again');
+      }
+    } else {
+      setErrorMessage('');
+    }
   }, [error]);
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string): void => {
     if (reason === 'clickaway') {
       return;
     }
-    setErrorMessage(undefined);
+    setErrorMessage('');
   };
 
   return (
     <Snackbar open={isOpen} autoHideDuration={2000} onClose={handleClose}>
       <Alert onClose={handleClose} severity="error">
-        {error}
+        {errorMessage}
       </Alert>
     </Snackbar>
   );

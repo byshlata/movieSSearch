@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 
 import { ThemeProvider } from '@material-ui/core';
 import Button from '@material-ui/core/Button/Button';
@@ -13,51 +13,33 @@ import s from './App.module.sass';
 import { themeDark, themeLight } from './createThemeMUI/createThemeMUI';
 
 import { ErrorSnackbar, PrimarySearchAppBar, TableMovies } from 'components';
-import { PageOptions } from 'enum';
 import { useAppDispatch } from 'hooks';
 import {
-  getMovies,
+  changeParams,
   selectorIsThemeIndex,
-  resultsMovie,
-  selectorErrorMessageOther,
-  selectorTitle,
   selectorPageNumber,
+  selectorTitle,
 } from 'store';
 
-const INITIAL_TITLE_FIRST = 'Batman';
-const INITIAL_TITLE_SECOND = 'Star wars';
-
 export const App = (): ReactElement => {
-  const totalResults = useSelector(resultsMovie);
   const pageNumber = useSelector(selectorPageNumber);
   const title = useSelector(selectorTitle);
   const isTheme = useSelector(selectorIsThemeIndex);
 
-  const errorMessageOther = useSelector(selectorErrorMessageOther);
-
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(
-      getMovies({ pageNumber: PageOptions.startPageFound, title: INITIAL_TITLE_FIRST }),
-    );
-    dispatch(
-      getMovies({ pageNumber: PageOptions.startPageFound, title: INITIAL_TITLE_SECOND }),
-    );
-  }, []);
-
-  const { data, error, isLoading } = useNextPage({ pageNumber: 1, title: 'batman' });
-
-  console.log('data', data);
+  const { movies, isButtonNext, errorMessage, isLoading } = useNextPage({
+    pageNumber,
+    title,
+  });
 
   const onClickHandler = (): void => {
-    dispatch(getMovies({ pageNumber, title }));
+    dispatch(changeParams({ pageNumber: pageNumber + 1, title }));
   };
 
-  const visibleDownButton =
-    totalResults > PageOptions.startTotal && title
-      ? `${s.downButtonVisible}`
-      : `${s.downButtonHidden}`;
+  const visibleDownButton = isButtonNext
+    ? `${s.downButtonVisible}`
+    : `${s.downButtonHidden}`;
 
   const backgroundColorBody = isTheme
     ? themeDark.palette.primary.light
@@ -75,7 +57,7 @@ export const App = (): ReactElement => {
         <PrimarySearchAppBar isLoading={isLoading} />
         <Container>
           <Grid container spacing={3} className={s.gridWrapper}>
-            <TableMovies />
+            <TableMovies movies={movies} />
             <Button
               onClick={onClickHandler}
               color="primary"
@@ -87,7 +69,7 @@ export const App = (): ReactElement => {
               Search
             </Button>
           </Grid>
-          <ErrorSnackbar error={error?.data || errorMessageOther} />
+          <ErrorSnackbar error={errorMessage} />
         </Container>
       </ThemeProvider>
     </div>

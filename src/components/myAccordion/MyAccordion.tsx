@@ -14,11 +14,11 @@ import { InformationTextLine } from 'components';
 import { DefaultSrc } from 'enum';
 import { useAppDispatch } from 'hooks';
 import { removeFavoritesMovie } from 'store';
-import { FavoriteMovieType } from 'types';
+import { MovieShortInformationType } from 'types';
 import { isImageFit } from 'utils';
 
 type MyAccordionType = {
-  favoritesMovie: FavoriteMovieType;
+  favoritesMovie: MovieShortInformationType;
 };
 
 const INDEX_HEIGHT_WIDTH = 5;
@@ -27,8 +27,8 @@ export const MyAccordion = React.memo(({ favoritesMovie }: MyAccordionType) => {
   const dispatch = useAppDispatch();
 
   const descriptionMovieInformation = [
-    { title: `Type: `, value: favoritesMovie.type },
-    { title: `Year: `, value: favoritesMovie.year },
+    { title: `Type: `, value: favoritesMovie.Type },
+    { title: `Year: `, value: favoritesMovie.Year },
   ];
 
   const defaultSrc = (e: SyntheticEvent<HTMLImageElement, Event>): void => {
@@ -55,13 +55,13 @@ export const MyAccordion = React.memo(({ favoritesMovie }: MyAccordionType) => {
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Typography>{favoritesMovie.title}</Typography>
+        <Typography>{favoritesMovie.Title}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <div className={s.accordionPoster}>
           <img
             className={s.posterImg}
-            src={favoritesMovie.poster}
+            src={favoritesMovie.Poster}
             onLoad={onLoadSrc}
             onError={defaultSrc}
             alt="Poster"

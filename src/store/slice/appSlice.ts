@@ -1,12 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ProgressOption } from '../../enum';
 import { AppInitialStateType, Nullable } from '../../types';
-import { getMovies } from '../thunk/pageThunk';
 
 export const initialState: AppInitialStateType = {
   errorMessage: '',
-  isProgress: ProgressOption.off,
   isTheme: true,
 };
 
@@ -22,17 +19,6 @@ export const appSlice = createSlice({
     changeTheme: state => {
       state.isTheme = !state.isTheme;
     },
-  },
-  extraReducers: builder => {
-    builder.addCase(getMovies.pending, state => {
-      state.isProgress = ProgressOption.on;
-    });
-    builder.addCase(getMovies.fulfilled, state => {
-      state.isProgress = ProgressOption.off;
-    });
-    builder.addCase(getMovies.rejected, state => {
-      state.isProgress = ProgressOption.off;
-    });
   },
 });
 

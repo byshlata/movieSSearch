@@ -19,7 +19,7 @@ import { useStyles } from './useStylePrimarySearchAppBar';
 import { CardFavoritesMovie, InputWrapper, MyAccordion } from 'components';
 import { FavoriteCartMassage, PageOptions } from 'enum';
 import { useAppDispatch } from 'hooks';
-import { changeTheme, selectorIsThemeIndex, myFavoritesMovies } from 'store';
+import { changeTheme, selectorIsThemeIndex, selectorFavoritesMoviesArray } from 'store';
 
 type PrimarySearchAppBarType = {
   isLoading: boolean;
@@ -29,14 +29,15 @@ export const PrimarySearchAppBar = React.memo(
   ({ isLoading }: PrimarySearchAppBarType) => {
     const classes = useStyles();
 
-    const favoritesMovies = useSelector(myFavoritesMovies);
+    const favoritesMovies = useSelector(selectorFavoritesMoviesArray);
     const themeState = useSelector(selectorIsThemeIndex);
 
     const dispatch = useAppDispatch();
 
     const [menuDrawer, setMenuDrawer] = useState<boolean>(false);
 
-    const numberFavoritesMovies = favoritesMovies.length - PageOptions.notFavoriteMovie;
+    const numberFavoritesMovies =
+      selectorFavoritesMoviesArray.length - PageOptions.notFavoriteMovie;
 
     const toggleDrawer =
       (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -55,7 +56,7 @@ export const PrimarySearchAppBar = React.memo(
       <List className={s.drawerWrapper}>
         {favoritesMovies.map(movie => {
           if (
-            movie.title === '' &&
+            movie.Title === '' &&
             favoritesMovies.length === PageOptions.startNumberFavoriteMovies
           ) {
             return (
@@ -65,7 +66,7 @@ export const PrimarySearchAppBar = React.memo(
               />
             );
           }
-          if (movie.title === '') {
+          if (movie.Title === '') {
             return (
               <CardFavoritesMovie
                 key={movie.imdbID}

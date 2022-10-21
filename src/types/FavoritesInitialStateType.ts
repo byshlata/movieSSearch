@@ -1,6 +1,6 @@
-import { FavoriteMovieType } from 'types/FavoriteMovieType';
+import { MovieShortInformationType } from 'types/MovieShortInformationType';
 
 export type FavoritesInitialStateType = {
-  favoritesMovies: FavoriteMovieType[];
+  favoritesMovies: MovieShortInformationType[];
   favoritesMoviesObj: { [key: string]: string };
 };

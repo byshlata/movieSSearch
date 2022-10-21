@@ -8,14 +8,15 @@ import s from './MovieCard.module.sass';
 
 import { MovieInformation, PosterMovie } from 'components';
 import { useAppDispatch } from 'hooks';
-import { useGetMovieByIdQuery, occurredError } from 'store';
-import { FavoriteMovieType } from 'types';
+import { occurredError, useGetMovieByIdQuery } from 'store';
+import { MovieShortInformationType } from 'types';
 
 type MovieCardType = {
-  movieInformation: FavoriteMovieType;
+  movieInformation: MovieShortInformationType;
+  isFavorite: boolean;
 };
 
-export const MovieCard = React.memo(({ movieInformation }: MovieCardType) => {
+export const MovieCard = React.memo(({ movieInformation, isFavorite }: MovieCardType) => {
   const dispatch = useAppDispatch();
 
   const [skip, setSkip] = useState<boolean>(true);
@@ -41,6 +42,7 @@ export const MovieCard = React.memo(({ movieInformation }: MovieCardType) => {
           <MovieInformation changeInformationByMovie={onClickHandle} movieResult={data} />
         ) : (
           <PosterMovie
+            isFavorite={isFavorite}
             informationMovieLight={movieInformation}
             OnOffProgress={setSkip}
             changeInformationByFilm={onClickHandle}

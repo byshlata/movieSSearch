@@ -1,4 +1,3 @@
-import { ProgressOption } from 'enum';
 import { AppInitialStateType, FavoritesInitialStateType } from 'types';
 
 export const loadStateFavoritesMovie = (): FavoritesInitialStateType | undefined => {
@@ -25,7 +24,6 @@ export const loadStateTheme = (): AppInitialStateType | undefined => {
     }
     return {
       errorMessage: '',
-      isProgress: ProgressOption.off,
       isTheme: JSON.parse(isTheme),
     };
   } catch (err) {

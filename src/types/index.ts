@@ -25,3 +25,5 @@ export type { MoviePageType } from './MoviePageType';
 export type { UndefinedType } from './UndefinedType';
 
 export type { MovieSearchParamsType } from './MovieSearchParamsType';
+
+export type { ErrorType } from './ErrorType';

@@ -1,53 +1,89 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
+
+import { SerializedError } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 
 import { useGetMoviesQuery } from '../store/api/moviesApi';
 
-import { MoviePageType, MovieTitleRequestType, UndefinedType } from 'types';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { changeParams } from 'store';
+import { MovieShortInformationType, MovieTitleRequestType, UndefinedType } from 'types';
 
 type UseNextPageType = {
-  data: UndefinedType<MoviePageType>;
-  error: unknown;
+  movies: MovieShortInformationType[];
+  isButtonNext: boolean;
+  errorMessage: string | FetchBaseQueryError | SerializedError | undefined;
   isLoading: boolean;
 };
 
-type ErrorType = {
-  error: {
-    status: number;
-    data: string;
-  };
-};
+const NUMBER_MOVIES_ON_ONE_RESPONSE = 10;
 
 export const useNextPage = ({
   pageNumber,
   title,
 }: MovieTitleRequestType): UseNextPageType => {
+  const dispatch = useAppDispatch();
+
   const [skip, setSkip] = useState<boolean>(true);
-  const [params, setParams] = useState<MovieTitleRequestType>({ title, pageNumber });
+  const [isButtonNext, setIsButtonNext] = useState<boolean>(true);
+  const [movies, setMovies] = useState<MovieShortInformationType[]>([]);
+  const [errorMessage, setErrorMessage] = useState<UndefinedType<string>>();
 
-  useEffect(() => {
-    if (title) {
-      setSkip(false);
-      setParams({ pageNumber, title });
-    } else {
-      setSkip(true);
-    }
-  }, [title, pageNumber]);
-
-  const { data, error, isLoading } = useGetMoviesQuery(
+  const { data, isError, isLoading } = useGetMoviesQuery(
     {
-      pageNumber: params.pageNumber,
-      title: params.title,
+      pageNumber,
+      title,
     },
     {
       skip,
     },
   );
 
-  const errorMessage = error as UndefinedType<ErrorType>;
+  useLayoutEffect(() => {
+    if (title) {
+      dispatch(changeParams({ pageNumber: 1, title }));
+      setSkip(false);
+      setMovies([]);
+    }
+  }, [title]);
+
+  useEffect(() => {
+    if (title) {
+      dispatch(changeParams({ pageNumber, title }));
+    }
+  }, [pageNumber]);
+
+  useEffect(() => {
+    if (data) {
+      if (data.Response === 'False' && pageNumber === 1) {
+        setSkip(true);
+        setIsButtonNext(false);
+        setErrorMessage(data.Error);
+      }
+      if (data.Response === 'False' && pageNumber !== 1) {
+        setSkip(true);
+        setIsButtonNext(false);
+        setErrorMessage('');
+      }
+      if (data.Response === 'True') {
+        setIsButtonNext(true);
+        setMovies([...movies, ...data.Search]);
+      }
+    } else {
+      setIsButtonNext(false);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (isError) {
+      setErrorMessage('Some error');
+    }
+  }, [isError]);
 
   return {
-    data,
-    error,
+    movies,
+    isButtonNext,
+    errorMessage,
     isLoading,
   };
 };

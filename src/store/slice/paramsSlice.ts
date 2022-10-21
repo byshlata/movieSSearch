@@ -11,10 +11,12 @@ export const paramsSlice = createSlice({
   name: 'pageSlice',
   initialState,
   reducers: {
-    changeParams: (state, action: PayloadAction<MovieSearchParamsType>) => ({
-      ...state,
-      ...action,
-    }),
+    changeParams: (state, action: PayloadAction<MovieSearchParamsType>) => {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
     removeParams: () => initialState,
   },
 });

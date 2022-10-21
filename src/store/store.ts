@@ -6,7 +6,6 @@ import { paramsSlice } from './slice/paramsSlice';
 
 import { appSlice } from 'store/slice/appSlice';
 import { favoritesMovieSlice } from 'store/slice/favoritesMoveiSlice';
-import { pageSlice } from 'store/slice/pageSlice';
 import {
   loadStateFavoritesMovie,
   loadStateTheme,
@@ -15,7 +14,6 @@ import {
 
 export const store = configureStore({
   reducer: {
-    pageNumber: pageSlice.reducer,
     params: paramsSlice.reducer,
     favoritesMovie: favoritesMovieSlice.reducer,
     app: appSlice.reducer,

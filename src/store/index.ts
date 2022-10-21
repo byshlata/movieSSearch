@@ -4,8 +4,6 @@ export type { AppRootStore, AppDispatch } from './store';
 
 export { occurredError, changeTheme, initialStateApp } from './slice/appSlice';
 
-export { addSearchResult, removeSearchResult } from './slice/pageSlice';
-
 export {
   addFavoritesMovie,
   removeFavoritesMovie,
@@ -13,14 +11,10 @@ export {
   initialStateFavoritesMovie,
 } from './slice/favoritesMoveiSlice';
 
-export { getMovies } from './thunk/pageThunk';
-
 export {
-  searchResult,
-  resultsMovie,
-  myFavoritesMovies,
-  progress,
-} from './selectors/selectors';
+  selectorFavoritesMoviesObj,
+  selectorFavoritesMoviesArray,
+} from './selectors/seloctorsFavoriteMovie';
 
 export { selectorPageNumber, selectorTitle } from './selectors/seloctorsParams';
 
